@@ -1,0 +1,26 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">Checkout</h3>
+  </div>
+  <div class="modal-body">
+    <div ng-repeat="item in cart">
+      <div class="my-row spaced-content vertical-margin">
+        <div>{{item.name}}</div>
+        <div class="my-row">
+          <div class="horizontal-margin">{{item.quantity}}x</div>
+          <div>₹{{item.discountedPrice}}</div>
+        </div>
+      </div>
+    </div>
+<div class="my-row spaced-content vertical-margin">
+  <div>
+  </div>
+    <div><u>Subtotal:</u> ₹{{getCartSubtotal()}}</div>
+  </div>
+   
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">Checkout</button>
+      </div>
+  </div>
+</div>

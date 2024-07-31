@@ -3,45 +3,17 @@ oldMenu.controller("bodyController", [
   "cartService",
   function ($scope, cartService) {
     $scope.isCartOpen = false;
+
     $scope.toggleCartVisibility = function () {
       $scope.cart = cartService.cart;
       $scope.isCartOpen = !$scope.isCartOpen;
-
-      $scope.getCartQuantity = function (itemID) {
-        if ($scope.cart[itemID] != null) {
-          return $scope.cart[itemID].quantity;
-        }
-        return 0;
-      };
-
-      $scope.changeItemQuantityInCart = function (action, itemID) {
-        $scope.cart[itemID].quantity += action;
-        if ($scope.cart[itemID].quantity === 0) {
-          delete $scope.cart[itemID];
-        }
-        cartService.cart = $scope.cart;
-      };
-
-      $scope.getCartSubtotal = function () {
-        var subtotal = 0;
-
-        for (key in $scope.cart) {
-          subtotal +=
-            $scope.cart[key].quantity * $scope.cart[key].discountedPrice;
-        }
-        return subtotal;
-      };
-
-      $scope.getCartSubtotalWithoutDiscount = function () {
-        var subtotalWithoutDiscount = 0;
-
-        for (key in $scope.cart) {
-          subtotalWithoutDiscount +=
-            $scope.cart[key].quantity * $scope.cart[key].price;
-        }
-        return subtotalWithoutDiscount;
-      };
     };
+
+    $scope.getCartQuantity = cartService.getCartQuantity;
+    $scope.changeItemQuantityInCart = cartService.changeItemQuantityInCart;
+    $scope.getCartSubtotal = cartService.getCartSubtotal;
+    $scope.getCartSubtotalWithoutDiscount =
+      cartService.getCartSubtotalWithoutDiscount;
   },
 ]);
 
@@ -64,10 +36,15 @@ oldMenu.controller("homeController", [
     $scope.categories.forEach(function (category) {
       $scope.categoriesMap[category] = [];
     });
+
     $scope.items.forEach(function (item) {
       var category = item.category;
       $scope.categoriesMap[category].push(item);
     });
+
+    $scope.toggleFilterModalVisibility = function () {
+      $scope.showFilterModal = !$scope.showFilterModal;
+    };
 
     $scope.getDiscountPercentage = function (price, discountedPrice) {
       return Math.round((100 * (price - discountedPrice)) / price);
@@ -77,29 +54,13 @@ oldMenu.controller("homeController", [
       $scope.currentCategory = newCategory;
     };
 
-    $scope.getCartQuantity = function (itemID) {
-      if ($scope.cart[itemID] != null) {
-        return $scope.cart[itemID].quantity;
-      }
-      return 0;
-    };
-
-    $scope.addItemToCart = function (item) {
-      $scope.cart[item.id] = item;
-      $scope.cart[item.id].quantity = 1;
-      cartService.cart = $scope.cart;
-    };
-
-    $scope.changeItemQuantityInCart = function (action, itemID) {
-      $scope.cart[itemID].quantity += action;
-      if ($scope.cart[itemID].quantity === 0) {
-        delete $scope.cart[itemID];
-      }
-      cartService.cart = $scope.cart;
-    };
-
+    $scope.getCartQuantity = cartService.getCartQuantity;
+    $scope.changeItemQuantityInCart = cartService.changeItemQuantityInCart;
+    $scope.addItemToCart = cartService.addItemToCart;
     $scope.typeFilter = filtersService.typeFilter;
     $scope.cuisineFilter = filtersService.cuisineFilter;
+    $scope.isFilterSelected = filtersService.isFilterSelected;
+    $scope.toggleFilter = filtersService.toggleFilter;
 
     $scope.isDishToBeShown = function (type, cuisine) {
       var isTypeValid = false;
@@ -121,51 +82,6 @@ oldMenu.controller("homeController", [
 
       return isTypeValid && isCuisineValid;
     };
-
-    $scope.isFilterSelected = function (filterType, property) {
-      switch (filterType) {
-        case "type":
-          if ($scope.typeFilter[property] === true) {
-            return true;
-          }
-          break;
-        case "cuisine":
-          if ($scope.cuisineFilter[property] === true) {
-            return true;
-          }
-          break;
-        default:
-          break;
-      }
-      return false;
-    };
-
-    $scope.toggleFilter = function (filterType, property) {
-      switch (filterType) {
-        case "type":
-          if ($scope.typeFilter[property] === true) {
-            delete $scope.typeFilter[property];
-          } else {
-            $scope.typeFilter[property] = true;
-          }
-          filtersService.typeFilter = $scope.typeFilter;
-          break;
-        case "cuisine":
-          if ($scope.cuisineFilter[property] === true) {
-            delete $scope.cuisineFilter[property];
-          } else {
-            $scope.cuisineFilter[property] = true;
-          }
-          filtersService.cuisineFilter = $scope.cuisineFilter;
-          break;
-        default:
-          break;
-      }
-    };
-
-    $scope.toggleFilterModalVisibility = function () {
-      $scope.showFilterModal = !$scope.showFilterModal;
-    };
   },
 ]);
 
@@ -178,7 +94,6 @@ oldMenu.controller("itemDetailsController", [
     $scope.item = itemDetailsService.item;
     $scope.itemID = $routeParams.itemID;
     $scope.cart = cartService.cart;
-
 
     $scope.getDiscountPercentage = function (price, discountedPrice) {
       return Math.round((100 * (price - discountedPrice)) / price);
@@ -203,6 +118,53 @@ oldMenu.controller("itemDetailsController", [
         delete $scope.cart[itemID];
       }
       cartService.cart = $scope.cart;
+    };
+  },
+]);
+
+oldMenu.controller("ModalController", [
+  "$scope",
+  "$uibModal",
+  "cartService",
+  function ($scope, $uibModal, cartService) {
+    $scope.openModal = function () {
+      var modalInstance = $uibModal.open({
+        templateUrl: "checkoutModal.htm",
+        controller: "ModalInstanceController",
+        size: "lg",
+        resolve: {
+          cartService: cartService,
+        },
+      });
+
+      modalInstance.result.then(
+        function (selectedItem) {
+          $scope.selected = selectedItem;
+        },
+        function () {
+          console.log("Modal dismissed");
+        }
+      );
+    };
+  },
+]);
+
+oldMenu.controller("ModalInstanceController", [
+  "$scope",
+  "$uibModalInstance",
+  "cartService",
+  function ($scope, $uibModalInstance, cartService) {
+    $scope.cart = cartService.cart;
+
+    $scope.getCartSubtotal = cartService.getCartSubtotal;
+    console.log($scope.getCartSubtotal);
+
+    $scope.ok = function () {
+      $uibModalInstance.close("Some result");
+    };
+
+    $scope.cancel = function () {
+      $uibModalInstance.dismiss("cancel");
     };
   },
 ]);

@@ -22,11 +22,11 @@
         <div class="my-row spaced-content">
           <div>
             <div>
-              <b>₹{{item.price}}</b>
+              <b>₹{{item.discountedPrice}}</b>
               <small
                 ng-if="item.discountedPrice !== item.price"
                 style="color: grey"
-                ><s>₹{{item.discountedPrice}}</s></small
+                ><s>₹{{item.price}}</s></small
               >
             </div>
             <div>
