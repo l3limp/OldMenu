@@ -27,8 +27,10 @@ oldMenu.controller("homeController", [
     $scope.categories = ["Bowl", "Super Bowl", "Omelette"];
     $scope.cuisines = ["Universal", "Continental", "Mexican", "Fusion"];
     $scope.types = ["veg", "nonveg"];
+
     // known bug: clicking on one category redirects you to that, but doesnt show on the categories list until clicked again, I do not know the cause
     $scope.currentCategory = "Bowl";
+    
     $scope.categoriesMap = {};
     $scope.cart = cartService.cart;
     $scope.showFilterModal = false;

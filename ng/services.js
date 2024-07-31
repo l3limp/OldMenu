@@ -78,8 +78,7 @@ oldMenu.service("itemDetailsService", [
 ]);
 
 oldMenu.service("cartService", [
-  "itemService",
-  function (itemService) {
+  function () {
     this.cart = {};
 
     this.getCartSubtotal = function () {

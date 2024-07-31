@@ -26,9 +26,9 @@
           <a class="btn btn-primary" ng-click="addItemToCart(item)">ADD</a>
 
         </div>
-        <div ng-class="{hidden: getCartQuantity(item.id) === 0}">
+        <div class="my-row" ng-class="{hidden: getCartQuantity(item.id) === 0}">
           <a class="btn btn-primary" ng-click="changeItemQuantityInCart(-1, item.id)">-</a>
-          {{getCartQuantity(item.id)}}
+           <div class="horizontal-margin">{{getCartQuantity(item.id)}}</div>
           <a class="btn btn-primary" ng-click="changeItemQuantityInCart(1, item.id)">+</a>
           
         </div>
