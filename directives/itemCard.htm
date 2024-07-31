@@ -1,0 +1,62 @@
+<div>
+  <div
+    class="card col-md-1"
+    style="width: 16rem; margin: 6px; padding: 0px"
+    ng-if="isDishToBeShown({type: item.type, cuisine:item.cuisine})==true"
+  >
+    <div style="font-size: small; color: grey; margin-bottom: 8px">
+      <img src="images/{{item.type}}.png" style="height: 20px" />
+      {{item.cuisine}}
+    </div>
+    <a href="#/items/1">
+      <img
+        src="{{item.image}}"
+        class="card-img-top"
+        style="width: 100%; border-radius: 10px"
+        alt="{{item.name}}"
+    /></a>
+    <div class="card-body">
+      <h5 class="card-title">{{item.name}}</h5>
+
+      <div class="card-text" style="font-size: large">
+        <div class="my-row spaced-content">
+          <div>
+            <div>
+              <b>₹{{item.price}}</b>
+              <small
+                ng-if="item.discountedPrice !== item.price"
+                style="color: grey"
+                ><s>₹{{item.discountedPrice}}</s></small
+              >
+            </div>
+            <div>
+              <small ng-if="item.discountedPrice !== item.price"
+                >{{getDiscountPercentage({price: item.price,discountedPrice:
+                item.discountedPrice})}}% OFF</small
+              ><small style="color: white">.</small>
+            </div>
+          </div>
+          <div ng-if="getCartQuantity({itemID: item.id}) === 0">
+            <a class="btn btn-primary" ng-click="addItemToCart({item: item})"
+              >ADD</a
+            >
+          </div>
+          <div ng-if="getCartQuantity({itemID: item.id}) !== 0">
+            <a
+              class="btn btn-primary horizontal-margin"
+              ng-click="changeItemQuantityInCart({action: -1, itemID:item.id})"
+              >-</a
+            >
+            {{getCartQuantity({itemID: item.id})}}
+            <a
+              class="btn btn-primary horizontal-margin"
+              ng-click="changeItemQuantityInCart({action: 1, itemID:item.id})"
+              >+</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+  </div>
+</div>

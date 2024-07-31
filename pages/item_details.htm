@@ -1,0 +1,51 @@
+<div class="container">
+  <div
+  style="height: 120px;"></div>
+  <div class="row">
+    <div class="col-md-6">
+      <img src={{item.image}} width="100%" />
+    </div>
+    <div class="col-md-5">
+      <div>{{item.name}}</div>
+      <div class="small-font">
+        <img src="images/{{item.type}}.png" style="height: 20px" />
+        {{item.cuisine}}
+      </div>
+      <div>
+        <s style="padding-right: 8px" class="small-font">₹{{item.price}}</s
+        >₹{{item.discountedPrice}}
+        <span
+          class="badge rounded-pill text-bg-secondary"
+          style="margin-left: 8px"
+          >{{getDiscountPercentage(item.price, item.discountedPrice)}}%
+          OFF</span
+        >
+      </div>
+      <div class="vertical-margin">
+        <div ng-class="{hidden: getCartQuantity(item.id) !== 0}">
+          <a class="btn btn-primary" ng-click="addItemToCart(item)">ADD</a>
+
+        </div>
+        <div ng-class="{hidden: getCartQuantity(item.id) === 0}">
+          <a class="btn btn-primary" ng-click="changeItemQuantityInCart(-1, item.id)">-</a>
+          {{getCartQuantity(item.id)}}
+          <a class="btn btn-primary" ng-click="changeItemQuantityInCart(1, item.id)">+</a>
+          
+        </div>
+      </div>
+      <div class="vertical-margin">
+        DETAILS ABOUT THIS MEAL
+        <div style="font-size: small; color: darkslategrey">
+          {{item.description}}
+        </div>
+      </div>
+
+      <div class="vertical-margin">
+        INGREDIENTS
+        <div style="font-size: small; color: darkslategrey">
+          {{item.ingredients}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

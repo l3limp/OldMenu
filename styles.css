@@ -1,0 +1,136 @@
+.vertical-margin {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.horizontal-margin {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.horizontal-padding {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.small-font {
+  color: grey;
+  font-size: 14px;
+}
+
+.my-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.spaced-content {
+  justify-content: space-between;
+}
+
+.sticky-top-navbar {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 998;
+  background-color: rgb(233, 233, 233);
+}
+
+.sticky-top {
+  position: fixed;
+  background-color: #fff;
+  z-index: 998;
+  top: 76px;
+}
+
+.sticky-categories {
+
+  position: fixed;
+  top: 132px;
+}
+
+/* for testing */
+.local-color {
+  background-color: yellowgreen;
+}
+
+@font-face {
+  font-family: Lato;
+  src: url("fonts/Lato-Regular.ttf");
+}
+.body {
+  font-family: Lato, sans-serif;
+}
+
+.filters-modal {
+  background-color: white;
+  z-index: 999;
+  height: 360px;
+  width: 280px;
+  color: black;
+  position: absolute;
+  top: 56px;
+  right: 0px;
+  overflow: scroll;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.filters-modal-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.apply-filter-button {
+  background-color: steelblue;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  height: 10%;
+  bottom: 0;
+  color: white;
+  border-radius: 0px;
+  align-content: center;
+}
+
+.sidebar {
+  height: 100%;
+  width: 350px;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 50px;
+  overflow: scroll;
+  transition: 0.5s;
+}
+
+.closebtn {
+  font-size: 32px;
+}
+
+.cart-subtotal {
+  background-color: white;
+  position: fixed;
+  width: 200px;
+  text-align: center;
+  height: 48px;
+  right: 80px;
+  bottom: 80px;
+  color: black;
+  border-radius: 16px;
+  align-content: center;
+}
+.cart-buy-button {
+  background-color: steelblue;
+  position: fixed;
+  width: 200px;
+  text-align: center;
+  height: 48px;
+  right: 80px;
+  bottom: 20px;
+  color: white;
+  border-radius: 16px;
+  align-content: center;
+}

@@ -1,0 +1,20 @@
+<div class="filters-modal" ng-if="showFilterModal == true">
+  <filter-section
+    list="types"
+    title="Food Preference"
+    filter-section-type="type"
+    toggle-filter="toggleFilter(filterType, property)"
+    is-filter-selected="isFilterSelected(filterType, property)"
+  ></filter-section>
+  
+  <filter-section
+    list="cuisines"
+    title="Cuisine"
+    filter-section-type="cuisine"
+    toggle-filter="toggleFilter(filterType, property)"
+    is-filter-selected="isFilterSelected(filterType, property)"
+  ></filter-section>
+  <div class="btn apply-filter-button" ng-click="toggleFilterModalVisibility()">
+    Apply
+  </div>
+</div>

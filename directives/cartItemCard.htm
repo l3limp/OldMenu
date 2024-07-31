@@ -1,0 +1,35 @@
+<div>
+  <div class="card-body my-row spaced-content">
+    <h5 class="card-title" style="font-size: 16px">{{item.name}}</h5>
+
+    <div class="my-row spaced-content" style="width: 100%">
+      <div class="my-row">
+        <h5 class="card-subtitle mb-2 horizontal-margin">
+          ₹{{item.discountedPrice}}
+        </h5>
+        <s
+          ><h5
+            ng-if="item.price!=item.discountedPrice"
+            class="card-subtitle mb-2 text-muted"
+          >
+            ₹{{item.price}}
+          </h5></s
+        >
+      </div>
+      <div>
+        <a
+          class="btn btn-primary horizontal-margin"
+          ng-click="changeItemQuantityInCart( {action:-1, itemID:item.id})"
+          >-</a
+        >
+        {{getCartQuantity({itemID: item.id})}}
+        <a
+          class="btn btn-primary horizontal-margin"
+          ng-click="changeItemQuantityInCart({action: 1, itemID: item.id})"
+          >+</a
+        >
+      </div>
+    </div>
+  </div>
+  <hr />
+</div>

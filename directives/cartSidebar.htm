@@ -1,0 +1,36 @@
+<div class="sidebar" ng-if="isCartOpen==true">
+  <div>
+    <div class="my-row spaced-content vertical-margin">
+      <div>Your Cart</div>
+      <button type="button" class="btn" ng-click="toggleCartVisibility()">
+        X
+      </button>
+    </div>
+
+    <div ng-if="getCartSubtotalWithoutDiscount()!=0">
+      <u> Subtotal:</u> ₹{{getCartSubtotal()}}
+      <small
+        ng-if="getCartSubtotalWithoutDiscount()!=getCartSubtotal()"
+        class="text-muted"
+        ><s>₹{{getCartSubtotalWithoutDiscount()}}</s></small
+      >
+    </div>
+    
+    <div class="vertical-margin" ng-if="getCartSubtotalWithoutDiscount()==0">
+      Your cart is currently empty, Add dishes to view them in cart
+    </div>
+
+    <br />
+
+    <div class="card" style="width: 14rem" ng-repeat="item in cart">
+      <cart-item-card
+        item="item"
+        get-cart-quantity="getCartQuantity(itemID)"
+        change-item-quantity-in-cart="changeItemQuantityInCart(action, itemID)"
+      ></cart-item-card>
+    </div>
+
+    <div style="height: 64px"></div>
+    <div class="cart-buy-button btn">Buy Now</div>
+  </div>
+</div>

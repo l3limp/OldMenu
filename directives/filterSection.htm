@@ -1,0 +1,17 @@
+<div class="filters-modal-flex" style="margin: 16px">
+  {{title}}
+
+  <div class="my-row vertical-margin">
+    <button
+      ng-repeat="element in list"
+      type="button"
+      class="btn"
+      ng-class="{ 'btn-primary': isFilterSelected({filterType: filterSectionType, property:element}) }"
+      data-bs-toggle="button"
+      style="margin-right: 8px; margin-bottom: 8px"
+      ng-click="toggleFilter({filterType: filterSectionType, property: element})"
+    >
+      {{element}}
+    </button>
+  </div>
+</div>
