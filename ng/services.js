@@ -166,3 +166,8 @@ oldMenu.service("filtersService", [
     };
   },
 ]);
+
+// had to make this service as the url kept changing on selecting a category, which reinitialised the controller and thus, currentCategory to 'bowl'
+oldMenu.service('categoryService', [function() {
+  this.currentCategory = "Bowl";
+}]);

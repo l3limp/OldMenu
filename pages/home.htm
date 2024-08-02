@@ -1,66 +1,33 @@
-<div class="sticky-top">
-  <div class="container" style="color: white">
-    <div class="navbar-brand" style="color: slategrey">Categories</div>
-
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <a
-          class="btn"
-          style="color: slategrey"
-          ng-click="toggleFilter('type', 'veg')"
-          uib-tooltip="Toggle Veg dishes" tooltip-placement="bottom"
-          >VEG</a
-        >
-      </li>
-      <li>
-        <a class="btn" style="color: slategrey" href="#/" uib-tooltip="Doesn't work" tooltip-placement="bottom">PRICE</a>
-      </li>
-
-      <li>
-        <a
-          class="btn"
-          style="color: slategrey"
-          ng-click="toggleFilterModalVisibility()"
-          >FILTERS</a
-        >
-        <filters-modal
-          show-filter-modal="showFilterModal"
-          types="types"
-          cuisines="cuisines"
-          toggle-filter="toggleFilter(filterType, property)"
-          toggle-filter-modal-visibility="toggleFilterModalVisibility()"
-          is-filter-selected="isFilterSelected(filterType, property)"
-        ></filters-modal>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<hr />
-
+<home-navbar
+  show-filter-modal="showFilterModal"
+  types="types"
+  cuisines="cuisines"
+  toggle-filter="toggleFilter(filterType, property)"
+  toggle-filter-modal-visibility="toggleFilterModalVisibility()"
+  is-filter-selected="isFilterSelected(filterType, property)"
+></home-navbar>
 
 <div style="height: 64px"></div>
 
-  <categories-column
-  current-category = "currentCategory"
+<categories-column
+  current-category="currentCategory"
   categories="categories"
   change-category="changeCategory(newCategory)"
-  ></categories-column>
+></categories-column>
 
-  <div class="col-md-10">
-    <div class="column" ng-repeat="category in categories">
-      <h2 id={{category}}>{{category}}</h2>
-      <div class="my-row">
-        <div ng-repeat="item in categoriesMap[category]">
-          <item-card
-            item="item"
-            is-dish-to-be-shown="isDishToBeShown(type, cuisine)"
-            get-discount-percentage="getDiscountPercentage(price, discountedPrice)"
-            get-cart-quantity="getCartQuantity(itemID)"
-            add-item-to-cart="addItemToCart(item)"
-            change-item-quantity-in-cart="changeItemQuantityInCart(action, itemID)"
-          ></item-card>
-        </div>
+<div class="col-md-10">
+  <div class="column" ng-repeat="category in categories">
+    <h2 id="{{category}}">{{category}}</h2>
+    <div class="my-row">
+      <div ng-repeat="item in categoriesMap[category]">
+        <item-card
+          item="item"
+          is-dish-to-be-shown="isDishToBeShown(type, cuisine)"
+          get-discount-percentage="getDiscountPercentage(price, discountedPrice)"
+          get-cart-quantity="getCartQuantity(itemID)"
+          add-item-to-cart="addItemToCart(item)"
+          change-item-quantity-in-cart="changeItemQuantityInCart(action, itemID)"
+        ></item-card>
       </div>
     </div>
   </div>

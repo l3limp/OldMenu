@@ -3,7 +3,6 @@
     <div class="list-group sticky-categories">
       <a
         ng-click="changeCategory({newCategory:category})"
-        href="#/#{{category}}"
         class="list-group-item list-group-item-action"
         ng-repeat="category in categories"
         ng-class="{ active: category === currentCategory }"

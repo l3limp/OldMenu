@@ -1,0 +1,37 @@
+<div class="sticky-top">
+    <div class="container" style="color: white">
+      <div class="navbar-brand" style="color: slategrey">Categories</div>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a
+            class="btn"
+            style="color: slategrey"
+            ng-click="toggleFilter({filterType:'type', property:'veg'})"
+            uib-tooltip="Toggle Veg dishes" tooltip-placement="bottom"
+            >VEG</a
+          >
+        </li>
+
+        <li>
+          <a class="btn" style="color: slategrey" href="#/" uib-tooltip="Doesn't work" tooltip-placement="bottom">PRICE</a>
+        </li>
+  
+        <li>
+          <a
+            class="btn"
+            style="color: slategrey"
+            ng-click="toggleFilterModalVisibility()"
+            >FILTERS</a
+          >
+          <filters-modal
+            show-filter-modal="showFilterModal"
+            types="types"
+            cuisines="cuisines"
+            toggle-filter="toggleFilter({filterType: filterType, property: property})"
+            toggle-filter-modal-visibility="toggleFilterModalVisibility()"
+            is-filter-selected="isFilterSelected({filterType: filterType, property: property})"
+          ></filters-modal>
+        </li>
+      </ul>
+    </div>
+  </div>

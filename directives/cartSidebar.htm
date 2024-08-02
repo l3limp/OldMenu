@@ -6,7 +6,7 @@
         X
       </button>
     </div>
-
+    
     <div ng-if="getCartSubtotalWithoutDiscount()!=0">
       <u> Subtotal:</u> ₹{{getCartSubtotal()}}
       <small
@@ -17,7 +17,8 @@
     </div>
     
     <div class="vertical-margin" ng-if="getCartSubtotalWithoutDiscount()==0">
-      Your cart is currently empty, Add dishes to view them in cart
+      <uib-alert type="danger" class="small-font">Your cart is currently empty, Add dishes to view them in cart</uib-alert>
+      
     </div>
 
     <br />

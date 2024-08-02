@@ -12,11 +12,10 @@
         {{item.cuisine}}
       </div>
       <div>
-        <s style="padding-right: 8px" class="small-font">₹{{item.price}}</s
+        <s class="small-font horizontal-margin">₹{{item.price}}</s
         >₹{{item.discountedPrice}}
         <span
-          class="badge rounded-pill text-bg-secondary"
-          style="margin-left: 8px"
+          class="badge rounded-pill text-bg-secondary horizontal-margin"
           >{{getDiscountPercentage(item.price, item.discountedPrice)}}%
           OFF</span
         >
@@ -35,14 +34,14 @@
       </div>
       <div class="vertical-margin">
         DETAILS ABOUT THIS MEAL
-        <div style="font-size: small; color: darkslategrey">
+        <div class="small-font">
           {{item.description}}
         </div>
       </div>
 
       <div class="vertical-margin">
         INGREDIENTS
-        <div style="font-size: small; color: darkslategrey">
+        <div class="small-font">
           {{item.ingredients}}
         </div>
       </div>

@@ -71,7 +71,6 @@ oldMenu.directive('categoriesColumn', function() {
             currentCategory: '=',
             categories: '=',
             changeCategory: '&',
-
         }
     };
     
@@ -88,6 +87,35 @@ oldMenu.directive('filterSection', function() {
             toggleFilter: '&',
             isFilterSelected: '&',
 
+        }
+    };
+    
+});
+
+oldMenu.directive('homeNavbar', function() {
+    return {
+        templateUrl: 'directives/homeNavbar.htm',
+        replace: true,
+        scope: {
+            types: '=',
+            cuisines: '=',
+            showFilterModal:'=',
+            toggleFilter: '&',
+            isFilterSelected: '&',
+            toggleFilterModalVisibility: '&',
+
+        }
+    };
+    
+});
+
+
+oldMenu.directive('navbar', function() {
+    return {
+        templateUrl: 'directives/navbar.htm',
+        replace: true,
+        scope: {
+            toggleCartVisibility: '&',
         }
     };
     

@@ -19,17 +19,20 @@ oldMenu.controller("bodyController", [
 
 oldMenu.controller("homeController", [
   "$scope",
+  "$location",
+  "$anchorScroll",
   "itemService",
   "cartService",
   "filtersService",
-  function ($scope, itemService, cartService, filtersService) {
+  "categoryService",
+  function ($scope, $location, $anchorScroll, itemService, cartService, filtersService, categoryService) {
     $scope.items = itemService.itemsList;
     $scope.categories = ["Bowl", "Super Bowl", "Omelette"];
     $scope.cuisines = ["Universal", "Continental", "Mexican", "Fusion"];
-    $scope.types = ["veg", "nonveg"];
+    $scope.types = ["veg", "nonveg", "containsegg"];
 
     // known bug: clicking on one category redirects you to that, but doesnt show on the categories list until clicked again, I do not know the cause
-    $scope.currentCategory = "Bowl";
+    $scope.currentCategory = categoryService.currentCategory;
     
     $scope.categoriesMap = {};
     $scope.cart = cartService.cart;
@@ -52,8 +55,14 @@ oldMenu.controller("homeController", [
       return Math.round((100 * (price - discountedPrice)) / price);
     };
 
+    var scrollTo = function(elementID) {
+      $location.hash(elementID);
+      $anchorScroll();
+    };
+
     $scope.changeCategory = function (newCategory) {
-      $scope.currentCategory = newCategory;
+      categoryService.currentCategory = newCategory;
+      scrollTo(newCategory);
     };
 
     $scope.getCartQuantity = cartService.getCartQuantity;
