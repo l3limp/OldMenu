@@ -1,11 +1,16 @@
 oldMenu.controller("bodyController", [
     "$scope",
     "cartService",
-    function ($scope, cartService) {
+    "cacheService",
+    function ($scope, cartService, cacheService) {
       $scope.isCartOpen = false;
-  
+      $scope.cart = cartService.cart;
+
+      $scope.$watch('cart', function(newValue) {
+        cacheService.setData('cart', newValue);
+      }, true);
+
       $scope.toggleCartVisibility = function () {
-        $scope.cart = cartService.cart;
         $scope.isCartOpen = !$scope.isCartOpen;
       };
   

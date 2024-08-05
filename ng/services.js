@@ -1,8 +1,6 @@
 oldMenu.service("itemService", [
   function () {
-    this.items = [
-      
-    ];
+    this.items = [];
   },
 ]);
 
@@ -11,27 +9,13 @@ oldMenu.service("itemService", [
 oldMenu.service("itemDetailsService", [
   function () {
     this.item = {};
-    // this.item = {
-    //   id: 1,
-    //   name: "Fresh Fruit Bowl",
-    //   price: 249,
-    //   discountedPrice: 129,
-    //   cuisine: "Universal",
-    //   category: "Bowl",
-    //   image: "images/temp.JPG",
-    //   type: "Veg",
-    //   description:
-    //     "A mix of bite sized pineapple, watermelon, muskmelon, papaya, apple, pomegranate; perfect to brighten up your day in the morning and fuel you up for the rest of the day.",
-    //   ingredients:
-    //     "Watermelon, Apple, Muskmelon, Pineapple, Papaya, Pomegranate, Honey, Mint leaf",
-    //   nutrition: {},
-    // };
   },
 ]);
 
-oldMenu.service("cartService", [
-  function () {
-    this.cart = {};
+oldMenu.service("cartService", [ "cacheService",
+
+  function (cacheService) {
+    this.cart = cacheService.getData('cart') || {};
 
     this.getCartSubtotal = function () {
       var subtotal = 0;
@@ -120,6 +104,22 @@ oldMenu.service("filtersService", [
 ]);
 
 // had to make this service as the url kept changing on selecting a category, which reinitialised the controller and thus, currentCategory to 'bowl'
-oldMenu.service('categoryService', [function() {
-  this.currentCategory = "Bowl";
-}]);
+oldMenu.service("categoryService", [
+  function () {
+    this.currentCategory = "Bowl";
+  },
+]);
+
+angular.module('oldMenu').service('cacheService', function($window) {
+  return {
+    setData: function(key, data) {
+      $window.localStorage.setItem(key, angular.toJson(data));
+    },
+    getData: function(key) {
+      return angular.fromJson($window.localStorage.getItem(key));
+    },
+    removeData: function(key) {
+      $window.localStorage.removeItem(key);
+    }
+  };
+});

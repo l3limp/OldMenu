@@ -1,3 +1,46 @@
+
+
+@media (min-width: 1000px) {
+.big-screen-left-margin {
+  margin-left: 18%;
+}
+
+.sidebar {
+  height: 100%;
+  width: 350px;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 50px;
+  overflow: scroll;
+  transition: 0.5s;
+}
+}
+
+@media (max-width: 1000px) {
+  .small-screen-hide {
+    display: none;
+
+  }
+
+.sidebar {
+  height: 100%;
+  width: 500px;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 50px;
+  overflow: scroll;
+  transition: 0.5s;
+}
+}
+
 .vertical-margin {
   margin-top: 12px;
   margin-bottom: 12px;
@@ -41,6 +84,7 @@
   background-color: #fff;
   z-index: 998;
   top: 76px;
+  width: 100%;
 }
 
 .sticky-categories {
@@ -94,28 +138,14 @@
   align-content: center;
 }
 
-.sidebar {
-  height: 100%;
-  width: 350px;
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  right: 0;
-  background-color: white;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 50px;
-  overflow: scroll;
-  transition: 0.5s;
-}
-
 .closebtn {
   font-size: 32px;
 }
 
 .cart-subtotal {
   background-color: white;
-  position: fixed;
-  width: 200px;
+  position: relative;
+  width: 100%;
   text-align: center;
   height: 48px;
   right: 80px;
@@ -126,12 +156,10 @@
 }
 .cart-buy-button {
   background-color: steelblue;
-  position: fixed;
-  width: 200px;
+  position: relative;
+  width: 100%;
   text-align: center;
   height: 48px;
-  right: 80px;
-  bottom: 20px;
   color: white;
   border-radius: 16px;
   align-content: center;

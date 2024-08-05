@@ -7,6 +7,7 @@ oldMenu.controller("homeController", [
   "cartService",
   "filtersService",
   "categoryService",
+  "cacheService",
   "$log",
   function (
     $scope,
@@ -17,6 +18,7 @@ oldMenu.controller("homeController", [
     cartService,
     filtersService,
     categoryService,
+    cacheService,
     $log
   ) {
     $scope.types = ["Veg", "Non Veg", "Contains Egg"];
@@ -27,6 +29,10 @@ oldMenu.controller("homeController", [
     $scope.categoriesMap = {};
     $scope.cart = cartService.cart;
     $scope.showFilterModal = false;
+
+    $scope.$watch('cart', function(newValue) {
+      cacheService.setData('cart', newValue);
+    }, true);
 
     $scope.loadData = async function () {
       try {
@@ -115,5 +121,13 @@ oldMenu.controller("homeController", [
 
       return isTypeValid && isCuisineValid;
     };
+
+    $scope.sortItemsPriceAscending = function() {
+      for(category in $scope.categoriesMap) {
+        $scope.categoriesMap[category].sort((a,b)=>a.discountedPrice - b.discountedPrice);
+      }
+    };
   },
 ]);
+
+

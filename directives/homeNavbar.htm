@@ -1,38 +1,44 @@
 <div class="sticky-top">
-    <div class="container" style="color: white">
-      <div class="navbar-brand" style="color: slategrey">Categories</div>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a
-            class="btn"
-            style="color: slategrey"
-            ng-click="toggleFilter({filterType:'type', property:'Veg'})"
-            uib-tooltip="Toggle Veg dishes" tooltip-placement="bottom"
-            >Veg</a
-          >
-        </li>
+  <div class="container" style="color: white; height: 32px;">
+    <div class="navbar-brand" style="color: slategrey">Categories</div>
+    <ul class=" nav navbar-nav navbar-right">
+      <li>
+        <i
+          class="fa fa-leaf btn vertical-margin"
+          style="color: slategrey"
+          ng-click="toggleFilter({filterType:'type', property:'Veg'})"
+          uib-tooltip="Toggle Veg dishes"
+          tooltip-placement="bottom"
+        ></i>
+      </li>
 
-        <li>
-          <a class="btn" style="color: slategrey" href="#/" uib-tooltip="Doesn't work" tooltip-placement="bottom">PRICE</a>
-        </li>
-  
-        <li>
-          <a
-            class="btn"
-            style="color: slategrey"
-            ng-click="toggleFilterModalVisibility()"
-            >FILTERS</a
-          >
-          <filters-modal
-            show-filter-modal="showFilterModal"
-            types="types"
-            cuisines="cuisines"
-            toggle-filter="toggleFilter({filterType: filterType, property: property})"
-            toggle-filter-modal-visibility="toggleFilterModalVisibility()"
-            is-filter-selected="isFilterSelected({filterType: filterType, property: property})"
-          ></filters-modal>
-        </li>
-      </ul>
-    </div>
-    <hr />
+      <li>
+        <i
+          class="fa fa-inr btn vertical-margin"
+          style="color: slategrey"
+          uib-tooltip="Doesn't work"
+          tooltip-placement="bottom"
+          ng-click="sortItemsPriceAscending()"
+        ></i>
+      </li>
+
+      <li>
+        <i
+          class="fa fa-filter btn vertical-margin"
+          style="color: slategrey"
+          ng-click="toggleFilterModalVisibility()"
+        ></i>
+        
+        >
+        <filters-modal
+          show-filter-modal="showFilterModal"
+          types="types"
+          cuisines="cuisines"
+          toggle-filter="toggleFilter({filterType: filterType, property: property})"
+          toggle-filter-modal-visibility="toggleFilterModalVisibility()"
+          is-filter-selected="isFilterSelected({filterType: filterType, property: property})"
+        ></filters-modal>
+      </li>
+    </ul>
   </div>
+</div>

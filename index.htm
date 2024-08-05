@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us" ng-app="oldMenu">
   <head>
-    <title>Introduction to AngularJS</title>
+    <title>OldMenu</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta charset="UTF-8" />
 
@@ -9,6 +9,9 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
     <link rel="stylesheet" href="styles.css" />
     <style>
       html,
@@ -29,7 +32,8 @@
     <header>
       <navbar toggle-cart-visibility="toggleCartVisibility()"></navbar>
     </header>
-    <div class="container">
+    <div class="container-fluid">
+      
       <div ng-view></div>
 
         <cart-sidebar

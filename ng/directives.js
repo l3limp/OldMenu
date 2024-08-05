@@ -103,7 +103,7 @@ oldMenu.directive('homeNavbar', function() {
             toggleFilter: '&',
             isFilterSelected: '&',
             toggleFilterModalVisibility: '&',
-
+            sortItemsPriceAscending: '&',
         }
     };
     
