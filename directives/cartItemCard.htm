@@ -19,13 +19,13 @@
       <div>
         <a
           class="btn btn-primary horizontal-margin"
-          ng-click="changeItemQuantityInCart( {action:-1, itemID:item.id})"
+          ng-click="changeItemQuantityInCart( {action:-1, itemId:item.id})"
           >-</a
         >
-        {{getCartQuantity({itemID: item.id})}}
+        {{getCartQuantity({itemId: item.id})}}
         <a
           class="btn btn-primary horizontal-margin"
-          ng-click="changeItemQuantityInCart({action: 1, itemID: item.id})"
+          ng-click="changeItemQuantityInCart({action: 1, itemId: item.id})"
           >+</a
         >
       </div>

@@ -36,8 +36,8 @@
           is-cart-open="isCartOpen"
           cart="cart"
           toggle-cart-visibility="toggleCartVisibility()"
-          change-item-quantity-in-cart="changeItemQuantityInCart(action, itemID)"
-          get-cart-quantity="getCartQuantity(itemID)"
+          change-item-quantity-in-cart="changeItemQuantityInCart(action, itemId)"
+          get-cart-quantity="getCartQuantity(itemId)"
           get-cart-subtotal="getCartSubtotal()"
           get-cart-subtotal-without-discount = "getCartSubtotalWithoutDiscount()"
         ></cart-sidebar>
@@ -46,7 +46,10 @@
     
     <script src="ng/app.js"></script>
     <script src="ng/routes.js"></script>
-    <script src="ng/controllers.js"></script>
+    <script src="ng/controllers/bodyController.js"></script>
+    <script src="ng/controllers/buyNowModalController.js"></script>
+    <script src="ng/controllers/homeController.js"></script>
+    <script src="ng/controllers/itemDetailsController.js"></script>
     <script src="ng/services.js"></script>
     <script src="ng/directives.js"></script>
   </body>

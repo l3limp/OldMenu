@@ -44,9 +44,11 @@
 }
 
 .sticky-categories {
-
+  overflow: scroll;
+  height: 72%;
+  width: 164px;
   position: fixed;
-  top: 132px;
+  top: 188px;
 }
 
 /* for testing */

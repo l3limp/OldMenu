@@ -7,7 +7,6 @@
   is-filter-selected="isFilterSelected(filterType, property)"
 ></home-navbar>
 
-<div style="height: 64px"></div>
 
 <categories-column
   current-category="currentCategory"
@@ -15,7 +14,8 @@
   change-category="changeCategory(newCategory)"
 ></categories-column>
 
-<div class="col-md-10">
+<div class="col-md-10" style="margin-top: 160px;">
+  
   <div class="column" ng-repeat="category in categories">
     <h2 id="{{category}}">{{category}}</h2>
     <div class="my-row">
@@ -24,9 +24,9 @@
           item="item"
           is-dish-to-be-shown="isDishToBeShown(type, cuisine)"
           get-discount-percentage="getDiscountPercentage(price, discountedPrice)"
-          get-cart-quantity="getCartQuantity(itemID)"
+          get-cart-quantity="getCartQuantity(itemId)"
           add-item-to-cart="addItemToCart(item)"
-          change-item-quantity-in-cart="changeItemQuantityInCart(action, itemID)"
+          change-item-quantity-in-cart="changeItemQuantityInCart(action, itemId)"
         ></item-card>
       </div>
     </div>

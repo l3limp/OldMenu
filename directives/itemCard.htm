@@ -36,21 +36,21 @@
               ><small style="color: white">.</small>
             </div>
           </div>
-          <div ng-if="getCartQuantity({itemID: item.id}) === 0">
+          <div ng-if="getCartQuantity({itemId: item.id}) === 0">
             <a class="btn btn-primary" ng-click="addItemToCart({item: item})"
               >ADD</a
             >
           </div>
-          <div ng-if="getCartQuantity({itemID: item.id}) !== 0">
+          <div ng-if="getCartQuantity({itemId: item.id}) !== 0">
             <a
               class="btn btn-primary horizontal-margin"
-              ng-click="changeItemQuantityInCart({action: -1, itemID:item.id})"
+              ng-click="changeItemQuantityInCart({action: -1, itemId:item.id})"
               >-</a
             >
-            {{getCartQuantity({itemID: item.id})}}
+            {{getCartQuantity({itemId: item.id})}}
             <a
               class="btn btn-primary horizontal-margin"
-              ng-click="changeItemQuantityInCart({action: 1, itemID:item.id})"
+              ng-click="changeItemQuantityInCart({action: 1, itemId:item.id})"
               >+</a
             >
           </div>

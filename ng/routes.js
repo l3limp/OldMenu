@@ -4,7 +4,7 @@ oldMenu.config(function ($routeProvider) {
       .when("/", {
         templateUrl: "pages/home.htm",
         controller: "homeController",
-      }).when("/items/:itemID", {
+      }).when("/items/:itemId", {
         templateUrl: "pages/item_details.htm",
         controller: "itemDetailsController",
       });
