@@ -6,17 +6,18 @@
   toggle-filter-modal-visibility="toggleFilterModalVisibility()"
   is-filter-selected="isFilterSelected(filterType, property)"
   sort-items-price-ascending="sortItemsPriceAscending()"
+  load-searched-items="loadSearchedItems(searchQuery)"
+  search-query="searchQuery"
 ></home-navbar>
 
-
-<categories-column class="small-screen-hide"
+<categories-column
+  class="small-screen-hide"
   current-category="currentCategory"
   categories="categories"
   change-category="changeCategory(newCategory)"
 ></categories-column>
 
-<div class="big-screen-left-margin" style="margin-top: 172px;">
-  
+<div class="big-screen-left-margin" style="margin-top: 148px">
   <div class="column" ng-repeat="category in categories">
     <h2 id="{{category}}">{{category}}</h2>
     <div class="my-row">

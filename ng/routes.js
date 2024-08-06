@@ -1,12 +1,13 @@
-
-oldMenu.config(function ($routeProvider) {
+define(["app"], function (oldMenu) {
+  oldMenu.config(function ($routeProvider) {
     $routeProvider
       .when("/", {
         templateUrl: "pages/home.htm",
         controller: "homeController",
-      }).when("/items/:itemId", {
+      })
+      .when("/items/:itemId", {
         templateUrl: "pages/item_details.htm",
         controller: "itemDetailsController",
       });
   });
-  
+});

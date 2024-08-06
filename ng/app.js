@@ -1,1 +1,3 @@
-var oldMenu = angular.module("oldMenu", ["ngRoute", 'ui.bootstrap']);
+define(["angular", "angular-route", "ui-bootstrap"], function (angular) {
+  return angular.module("oldMenu", ["ngRoute", "ui.bootstrap"]);
+});

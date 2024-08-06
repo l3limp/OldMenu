@@ -41,6 +41,29 @@
 }
 }
 
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper .form-control {
+  padding-right: 30px; /* Adjust as needed */
+}
+
+.input-wrapper .search-icon {
+  position: absolute;
+  top: 50%;
+  right: 24px; 
+  transform: translateY(-50%);
+ /* Allows clicks to pass through to the input */
+}
+
+.clear-icon {
+  position: absolute;
+  top: 50%;
+  right: 0px; 
+  transform: translateY(-50%);
+}
+
 .vertical-margin {
   margin-top: 12px;
   margin-bottom: 12px;
@@ -92,7 +115,7 @@
   height: 72%;
   width: 164px;
   position: fixed;
-  top: 188px;
+  top: 156px;
 }
 
 /* for testing */
@@ -128,11 +151,11 @@
 
 .apply-filter-button {
   background-color: steelblue;
-  position: absolute;
+  position:sticky;
   width: 100%;
   text-align: center;
   height: 10%;
-  bottom: 0;
+  bottom: 0%;
   color: white;
   border-radius: 0px;
   align-content: center;

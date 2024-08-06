@@ -1,7 +1,32 @@
 <div class="sticky-top">
-  <div class="container" style="color: white; height: 32px;">
-    <div class="navbar-brand" style="color: slategrey">Categories</div>
-    <ul class=" nav navbar-nav navbar-right">
+  <div class="container" style="color: white; height: 32px">
+    <ul class="nav navbar-nav navbar-right">
+      <li class="vertical-margin">
+
+        <div class="input-wrapper">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search for items"
+            ng-model="searchQuery"
+          />
+          <div class="my-row">
+            <i
+            ng-if="searchQuery != ''"
+  
+              class=" btn fa fa-search search-icon small-font"
+              ng-click="loadSearchedItems({searchQuery: searchQuery})"
+            ></i>
+            <i
+
+  
+              class=" btn fa fa-close clear-icon small-font"
+              ng-click="loadSearchedItems({searchQuery: ''})"
+            ></i>
+          </div>
+         
+        </div>
+      </li>
       <li>
         <i
           class="fa fa-leaf btn vertical-margin"
@@ -16,7 +41,7 @@
         <i
           class="fa fa-inr btn vertical-margin"
           style="color: slategrey"
-          uib-tooltip="Doesn't work"
+          uib-tooltip="Works now"
           tooltip-placement="bottom"
           ng-click="sortItemsPriceAscending()"
         ></i>
@@ -28,7 +53,7 @@
           style="color: slategrey"
           ng-click="toggleFilterModalVisibility()"
         ></i>
-        
+
         >
         <filters-modal
           show-filter-modal="showFilterModal"
