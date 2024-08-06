@@ -97,6 +97,7 @@ define(["app"], function (oldMenu) {
         sortItemsPriceAscending: "&",
         loadSearchedItems: "&",
         searchQuery: "=",
+        applyFilter: "&",
       },
     };
   });

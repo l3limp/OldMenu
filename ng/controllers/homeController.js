@@ -39,11 +39,22 @@ define(["app"], function (oldMenu) {
         true
       );
 
+      $scope.refreshItemsDOM = function() {
+        $scope.categories.forEach(function (category) {
+          $scope.categoriesMap[category] = [];
+        });
+
+        $scope.items.forEach(function (item) {
+          var category = item.category;
+          $scope.categoriesMap[category].push(item);
+        });
+      };
+
       $scope.loadData = async function () {
         try {
           const [itemsResponse, categoriesResponse, cuisineResponse] =
             await Promise.all([
-              $http.get("http://localhost:3000/items"),
+              $http.get("http://localhost:3000/items", {params: {q:"paneer"}}),
               $http.get("http://localhost:3000/categories"),
               $http.get("http://localhost:3000/cuisines"),
             ]);
@@ -61,14 +72,7 @@ define(["app"], function (oldMenu) {
             $scope.categories = categories;
             $scope.cuisines = cuisines;
 
-            $scope.categories.forEach(function (category) {
-              $scope.categoriesMap[category] = [];
-            });
-
-            $scope.items.forEach(function (item) {
-              var category = item.category;
-              $scope.categoriesMap[category].push(item);
-            });
+            $scope.refreshItemsDOM();
           });
 
           itemService.items = items;
@@ -81,11 +85,33 @@ define(["app"], function (oldMenu) {
       $scope.loadSearchedItems = async function (searchQuery) {
         if (searchQuery == "") {
           $scope.searchQuery = "";
+          searchQuery = "strawberry";
         }
         try {
+
+          var cuisinesChosen = "";
+          var typesChosen = "";
+
+          for(const type in $scope.typeFilter) {
+            typesChosen+=type +',';
+          }
+
+          for(const cuisine in $scope.cuisineFilter) {
+            cuisinesChosen+=cuisine +',';
+          }
+
+          if(cuisinesChosen!="") {
+            cuisinesChosen = cuisinesChosen.slice(0, -1);
+          }
+          if(typesChosen!="") {
+            typesChosen = typesChosen.slice(0, -1);
+          }
+
           var config = {
             params: {
               q: searchQuery,
+              type: typesChosen,
+              cuisineNames: cuisinesChosen
             },
           };
           const itemsResponse = await $http.get(
@@ -99,15 +125,8 @@ define(["app"], function (oldMenu) {
 
           $scope.$apply(function () {
             $scope.items = items;
+            $scope.refreshItemsDOM();
 
-            $scope.categories.forEach(function (category) {
-              $scope.categoriesMap[category] = [];
-            });
-
-            $scope.items.forEach(function (item) {
-              var category = item.category;
-              $scope.categoriesMap[category].push(item);
-            });
           });
 
           itemService.items = items;
@@ -128,8 +147,8 @@ define(["app"], function (oldMenu) {
 
       var scrollTo = function (elementId) {
         //some bug
-        // $location.hash(elementId);
-        // $anchorScroll();
+        $location.hash(elementId);
+        $anchorScroll();
       };
 
       $scope.changeCategory = function (newCategory) {
@@ -172,6 +191,11 @@ define(["app"], function (oldMenu) {
             (a, b) => a.discountedPrice - b.discountedPrice
           );
         }
+      };
+
+      $scope.applyFilter = function() {
+      $scope.loadSearchedItems($scope.searchQuery);
+      $scope.toggleFilterModalVisibility();
       };
     },
   ]);
