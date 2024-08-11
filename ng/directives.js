@@ -98,6 +98,7 @@ define(["app"], function (oldMenu) {
         loadSearchedItems: "&",
         searchQuery: "=",
         applyFilter: "&",
+        applyVegFilter:'&',
       },
     };
   });

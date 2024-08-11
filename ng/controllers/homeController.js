@@ -54,14 +54,14 @@ define(["app"], function (oldMenu) {
         try {
           const [itemsResponse, categoriesResponse, cuisineResponse] =
             await Promise.all([
-              $http.get("http://localhost:3000/items", {params: {q:"paneer"}}),
-              $http.get("http://localhost:3000/categories"),
-              $http.get("http://localhost:3000/cuisines"),
+              $http.get("http://localhost:8080/freshmenu/items", {params: {query:"paneer"}}),
+              $http.get("http://localhost:8080/freshmenu/categories"),
+              $http.get("http://localhost:8080/freshmenu/cuisines"),
             ]);
 
-          const items = itemsResponse.data.items;
-          const categories = categoriesResponse.data.categories;
-          const cuisines = cuisineResponse.data.cuisines;
+          const items = itemsResponse.data;
+          const categories = categoriesResponse.data;
+          const cuisines = cuisineResponse.data;
 
           $log.log(items);
           $log.log(categories);
@@ -85,7 +85,7 @@ define(["app"], function (oldMenu) {
       $scope.loadSearchedItems = async function (searchQuery) {
         if (searchQuery == "") {
           $scope.searchQuery = "";
-          searchQuery = "strawberry";
+          searchQuery = "paneer";
         }
         try {
 
@@ -109,7 +109,7 @@ define(["app"], function (oldMenu) {
 
           var config = {
             params: {
-              q: searchQuery,
+              query: searchQuery,
               type: typesChosen,
               cuisineNames: cuisinesChosen
             },
@@ -197,6 +197,11 @@ define(["app"], function (oldMenu) {
       $scope.loadSearchedItems($scope.searchQuery);
       $scope.toggleFilterModalVisibility();
       };
+
+      $scope.applyVegFilter = function() {
+        $scope.toggleFilter('type','Veg');
+        $scope.loadSearchedItems('paneer');
+      }
     },
   ]);
 });
