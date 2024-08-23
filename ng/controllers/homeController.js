@@ -10,6 +10,7 @@ define(["app"], function (oldMenu) {
     "categoryService",
     "cacheService",
     "$log",
+    "ItemServiceDB",
     function (
       $scope,
       $location,
@@ -20,116 +21,132 @@ define(["app"], function (oldMenu) {
       filtersService,
       categoryService,
       cacheService,
-      $log
+      $log,
+      ItemServiceDB
     ) {
-      $scope.types = ["Veg", "Non Veg", "Contains Egg"];
+      $scope.types = ["Veg", "Non Veg"];
 
-      // known bug: clicking on one category redirects you to that, but doesnt show on the categories list until clicked again, I do not know the cause
       $scope.currentCategory = categoryService.currentCategory;
 
       $scope.categoriesMap = {};
       $scope.cart = cartService.cart;
       $scope.showFilterModal = false;
+      $scope.currentPage = 1;
+      $scope.loadingState = true;
+      $scope.searchResults = [];
 
       $scope.$watch(
-        "cart",
-        function (newValue) {
-          cacheService.setData("cart", newValue);
+        function () {
+          return $scope.searchQuery;
+        },
+        function (query) {
+            searchES($http, query).then((res) => {
+              $scope.searchResults = res;
+              $scope.$apply();
+            });
+          
+          
         },
         true
       );
 
-      $scope.refreshItemsDOM = function() {
+      
+
+      $scope.refreshItemsDOM = function () {
         $scope.categories.forEach(function (category) {
           $scope.categoriesMap[category] = [];
         });
 
         $scope.items.forEach(function (item) {
-          var category = item.category;
+          var category = item.category.name;
           $scope.categoriesMap[category].push(item);
         });
       };
 
+      $scope.$on("cartUpdated", function () {
+        $scope.cart = cartService.getCart();
+        if (!$scope.$$phase) {
+          $scope.$apply();
+        }
+      });
+
       $scope.loadData = async function () {
         try {
-          const [itemsResponse, categoriesResponse, cuisineResponse] =
-            await Promise.all([
-              $http.get("http://localhost:8080/freshmenu/items", {params: {query:"paneer"}}),
-              $http.get("http://localhost:8080/freshmenu/categories"),
-              $http.get("http://localhost:8080/freshmenu/cuisines"),
-            ]);
+          const [items, categories, cuisines] = await Promise.all([
+            ItemServiceDB.getItems({
+              searchFilters: { category: $scope.currentCategory },
+            }),
+            fetchCategories($http),
+            fetchCuisines($http),
+          ]);
 
-          const items = itemsResponse.data;
-          const categories = categoriesResponse.data;
-          const cuisines = cuisineResponse.data;
-
-          $log.log(items);
-          $log.log(categories);
-          $log.log(cuisines);
+          // const temp =await ItemServiceDB.getItems();
+          // $log.log(temp);
 
           $scope.$apply(function () {
             $scope.items = items;
             $scope.categories = categories;
             $scope.cuisines = cuisines;
-
-            $scope.refreshItemsDOM();
           });
 
           itemService.items = items;
+          itemService.categoryWiseItems["Bowls"] = items;
+
+          $scope.loadingState = false;
         } catch (error) {
           console.error("Error:", error);
         }
+        $scope.$apply("loadingState", function () {});
+        $scope.loadingState = false;
       };
 
       $scope.searchQuery = "";
       $scope.loadSearchedItems = async function (searchQuery) {
-        if (searchQuery == "") {
+        $scope.loadingState = true;
+        if (searchQuery == null) {
+          searchQuery = $scope.searchQuery;
+        } else if (searchQuery == "") {
           $scope.searchQuery = "";
-          searchQuery = "paneer";
+        } else {
+          $scope.currentPage = 1;
         }
         try {
-
           var cuisinesChosen = "";
           var typesChosen = "";
 
-          for(const type in $scope.typeFilter) {
-            typesChosen+=type +',';
+          for (const type in $scope.typeFilter) {
+            typesChosen += type + ",";
           }
 
-          for(const cuisine in $scope.cuisineFilter) {
-            cuisinesChosen+=cuisine +',';
+          for (const cuisine in $scope.cuisineFilter) {
+            cuisinesChosen += cuisine + ",";
           }
 
-          if(cuisinesChosen!="") {
+          if (cuisinesChosen != "") {
             cuisinesChosen = cuisinesChosen.slice(0, -1);
           }
-          if(typesChosen!="") {
+          if (typesChosen != "") {
             typesChosen = typesChosen.slice(0, -1);
           }
 
-          var config = {
-            params: {
-              query: searchQuery,
-              type: typesChosen,
-              cuisineNames: cuisinesChosen
-            },
-          };
-          const itemsResponse = await $http.get(
-            "http://localhost:3000/items",
-            config
-          );
+          const items = await fetchItems($http, {
+            query: searchQuery,
+            cuisines: cuisinesChosen,
+            categories: $scope.currentCategory,
+            pageNum: $scope.currentPage - 1,
+          });
 
-          const items = itemsResponse.data.items;
-
-          $log.log(items);
+          if ($scope.currentPage === 1) {
+            itemService.categoryWiseItems[$scope.currentCategory] = items;
+          }
 
           $scope.$apply(function () {
             $scope.items = items;
-            $scope.refreshItemsDOM();
-
           });
 
+          $scope.loadingState = false;
           itemService.items = items;
+          $scope.$apply("loadingState", function () {});
         } catch (error) {
           console.error("Error:", error);
         }
@@ -145,15 +162,19 @@ define(["app"], function (oldMenu) {
         return Math.round((100 * (price - discountedPrice)) / price);
       };
 
-      var scrollTo = function (elementId) {
-        //some bug
-        $location.hash(elementId);
-        $anchorScroll();
-      };
-
       $scope.changeCategory = function (newCategory) {
+        $scope.currentPage = 1;
         categoryService.currentCategory = newCategory;
-        scrollTo(newCategory);
+        $scope.currentCategory = newCategory;
+
+        if (
+          itemService.categoryWiseItems[$scope.currentCategory] != null &&
+          itemService.categoryWiseItems[$scope.currentCategory].length === 10
+        ) {
+          $scope.items = itemService.categoryWiseItems[$scope.currentCategory];
+        } else {
+          $scope.loadSearchedItems();
+        }
       };
 
       $scope.getCartQuantity = cartService.getCartQuantity;
@@ -186,22 +207,29 @@ define(["app"], function (oldMenu) {
       };
 
       $scope.sortItemsPriceAscending = function () {
-        for (category in $scope.categoriesMap) {
-          $scope.categoriesMap[category].sort(
-            (a, b) => a.discountedPrice - b.discountedPrice
-          );
+        $scope.items.sort((a, b) => a.discountedPrice - b.discountedPrice);
+      };
+
+      $scope.applyFilter = function () {
+        $scope.loadSearchedItems();
+        $scope.toggleFilterModalVisibility();
+      };
+
+      $scope.applyVegFilter = function () {
+        $scope.toggleFilter("type", "Veg");
+        $scope.loadSearchedItems();
+      };
+
+      $scope.changePage = function (action) {
+        if (
+          (action == -1 && $scope.currentPage == 1) ||
+          (action == 1 && $scope.items.length < 10)
+        ) {
+        } else {
+          $scope.currentPage += action;
+          $scope.loadSearchedItems();
         }
       };
-
-      $scope.applyFilter = function() {
-      $scope.loadSearchedItems($scope.searchQuery);
-      $scope.toggleFilterModalVisibility();
-      };
-
-      $scope.applyVegFilter = function() {
-        $scope.toggleFilter('type','Veg');
-        $scope.loadSearchedItems('paneer');
-      }
     },
   ]);
 });

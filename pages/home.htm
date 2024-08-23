@@ -10,6 +10,8 @@
   search-query="searchQuery"
   apply-filter="applyFilter()"
   apply-veg-filter="applyVegFilter()"
+  search-results = "searchResults"
+  focus-search = "focusSearch"
 ></home-navbar>
 
 <categories-column
@@ -20,19 +22,30 @@
 ></categories-column>
 
 <div class="big-screen-left-margin" style="margin-top: 148px">
-  <div class="column" ng-repeat="category in categories">
-    <h2 id="{{category}}">{{category}}</h2>
-    <div class="my-row">
-      <div ng-repeat="item in categoriesMap[category]">
-        <item-card
-          item="item"
-          is-dish-to-be-shown="isDishToBeShown(type, cuisine)"
-          get-discount-percentage="getDiscountPercentage(price, discountedPrice)"
-          get-cart-quantity="getCartQuantity(itemId)"
-          add-item-to-cart="addItemToCart(item)"
-          change-item-quantity-in-cart="changeItemQuantityInCart(action, itemId)"
-        ></item-card>
-      </div>
+  <div ng-if="loadingState">Loading</div>
+  <div ng-if="items.length == 0">No items in the category</div>
+  <div class="my-row">
+    <div ng-repeat="item in items" ng-if="!loadingState">
+      <item-card
+        item="item"
+        is-dish-to-be-shown="isDishToBeShown(type, cuisine)"
+        get-discount-percentage="getDiscountPercentage(price, discountedPrice)"
+        get-cart-quantity="getCartQuantity(itemId)"
+        add-item-to-cart="addItemToCart(item)"
+        change-item-quantity-in-cart="changeItemQuantityInCart(action, itemId)"
+      ></item-card>
     </div>
   </div>
+
+  <nav aria-label="...">
+    <ul class="pagination">
+      <li class="page-item" >
+        <a class="page-link" tabindex="-1" ng-click="changePage(-1)">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link">{{currentPage}}</a></li>
+      <li class="page-item">
+        <a class="page-link" ng-click="changePage(1)" >Next</a>
+      </li>
+    </ul>
+  </nav>
 </div>

@@ -1,7 +1,8 @@
 define(["app"], function (oldMenu) {
-  oldMenu.service("itemService", [
+  oldMenu.service("itemService",  [
     function () {
       this.items = [];
+      this.categoryWiseItems = {};
     },
   ]);
 
@@ -13,11 +14,22 @@ define(["app"], function (oldMenu) {
     },
   ]);
 
-  oldMenu.service("cartService", [
+  oldMenu.service("cartService",[
     "cacheService",
+    "$http",
+    "$rootScope",
 
-    function (cacheService) {
-      this.cart = cacheService.getData("cart") || {};
+    function (cacheService, $http, $rootScope) {
+      this.cart = {};
+
+      this.setCart = function(newCart) {
+        this.cart = angular.copy(newCart);
+        $rootScope.$broadcast('cartUpdated');
+      };
+
+      this.getCart = function() {
+        return this.cart;
+      }
 
       this.getCartSubtotal = function () {
         var subtotal = 0;
@@ -40,9 +52,22 @@ define(["app"], function (oldMenu) {
 
       this.changeItemQuantityInCart = function (action, itemId) {
         this.cart[itemId].quantity += action;
-        if (this.cart[itemId].quantity === 0) {
+        $rootScope.$broadcast('cartUpdated');
+
+        var body = {};
+        body.action = action;
+        body.itemId = itemId;
+        console.log("remaining quantity: ", this.cart[itemId].quantity);
+        if (this.cart[itemId].quantity <= 0) {
+          body = {};
+          body.itemId = itemId;
+          deleteFromCart($http, body);
           delete this.cart[itemId];
+        } else {
+          updateCart($http, body);
         }
+        $rootScope.$broadcast('cartUpdated');
+
       };
 
       this.getCartQuantity = function (itemId) {
@@ -55,7 +80,25 @@ define(["app"], function (oldMenu) {
       this.addItemToCart = function (item) {
         this.cart[item.id] = item;
         this.cart[item.id].quantity = 1;
+        addItemToBackendCart($http, {itemId: item.id});
+        $rootScope.$broadcast('cartUpdated');
+
       };
+      
+      this.placeOrder = function() {
+        if(this.cart == null) return null;
+        orderItems = [];
+        for(var key in this.cart) {
+        orderItem = {};
+          orderItem.itemId = this.cart[key].id;
+          orderItem.quantity = this.cart[key].quantity;
+          orderItems.push(orderItem);
+        }
+        placeOrder($http, {orderItems:orderItems});
+        this.cart = {};
+        $rootScope.$broadcast('cartUpdated');
+      }
+
     },
   ]);
 

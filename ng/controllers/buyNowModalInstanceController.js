@@ -7,8 +7,11 @@ define(["app"], function (oldMenu) {
       $scope.cart = cartService.cart;
 
       $scope.getCartSubtotal = cartService.getCartSubtotal;
+      $scope.placeOrder = cartService.placeOrder;
 
-      $scope.ok = function () {
+      $scope.ok = async function () {
+        await $scope.placeOrder();
+        cartService.cart = {};
         $uibModalInstance.close("Some result");
       };
 

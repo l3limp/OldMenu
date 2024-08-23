@@ -19,7 +19,6 @@ define(["app"], function (oldMenu) {
             $scope.selected = selectedItem;
           },
           function () {
-            console.log("Modal dismissed");
           }
         );
       };

@@ -9,7 +9,7 @@
       <div>{{item.name}}</div>
       <div class="small-font">
         <img src="images/{{item.type}}.png" style="height: 20px" />
-        {{item.cuisine}}
+        {{item.cuisine.name}}
       </div>
       <div>
         <s class="small-font horizontal-margin">₹{{item.price}}</s
@@ -35,14 +35,14 @@
       <div class="vertical-margin">
         DETAILS ABOUT THIS MEAL
         <div class="small-font">
-          {{item.description}}
+          {{item.itemDetails.description}}
         </div>
       </div>
 
       <div class="vertical-margin">
         INGREDIENTS
         <div class="small-font">
-          {{item.ingredients}}
+          {{item.itemDetails.ingredients}}
         </div>
       </div>
     </div>

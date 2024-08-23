@@ -13,6 +13,8 @@ require.config({
     buyNowModalInstanceController: "controllers/buyNowModalInstanceController",
     homeController: "controllers/homeController",
     itemDetailsController: "controllers/itemDetailsController",
+    requests: "../service_functions/requests",
+    indexdb: "../service_functions/indexdb",
   },
   shim: {
     angular: { exports: "angular" },
@@ -22,11 +24,12 @@ require.config({
     routes: { deps: ["app"] },
     services: { deps: ["app"] },
     directives: { deps: ["app"] },
-    bodyController: { deps: ["app"] },
-    buyNowModalController: { deps: ["app"] },
-    buyNowModalInstanceController: { deps: ["app"] },
-    homeController: { deps: ["app"] },
-    itemDetailsController: { deps: ["app"] },
+    bodyController: { deps: ["app", "requests", "indexdb", ] },
+    buyNowModalController: { deps: ["app", "requests", "indexdb"] },
+    buyNowModalInstanceController: { deps: ["app", "requests", "indexdb"] },
+    homeController: { deps: ["app", "requests", "indexdb"] },
+    itemDetailsController: { deps: ["app", "requests", "indexdb"] },
+    indexdb: {deps: ["app", "requests"]},
   },
 });
 
@@ -39,7 +42,7 @@ require([
   "buyNowModalController",
   "buyNowModalInstanceController",
   "homeController",
-  "itemDetailsController",
+  "itemDetailsController"
 ], function (app) {
   angular.bootstrap(document, ["oldMenu"]);
 });

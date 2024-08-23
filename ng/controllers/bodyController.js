@@ -1,19 +1,33 @@
 define(["app"], function (oldMenu) {
   oldMenu.controller("bodyController", [
     "$scope",
+    "$http",
     "cartService",
     "cacheService",
-    function ($scope, cartService, cacheService) {
+    "$q",
+    function ($scope, $http, cartService, cacheService, $q) {
       $scope.isCartOpen = false;
-      $scope.cart = cartService.cart;
+      $scope.cart = {};
+      
+      $scope.$on('cartUpdated', function() {
+        $scope.cart = cartService.getCart();
+        if (!$scope.$$phase) {
+          $scope.$apply();
+        }
+      });
 
-      $scope.$watch(
-        "cart",
-        function (newValue) {
-          cacheService.setData("cart", newValue);
-        },
-        true
-      );
+      cartFetch = function() {
+        return $q(function(resolve, reject) {
+          fetchCart($http).then(function(fetchedCart) {
+            
+            resolve(fetchedCart);
+          }, reject);
+        });
+      };
+  
+      cartFetch().then(function(fetchedCart) {
+            cartService.setCart(fetchedCart);
+      });
 
       $scope.toggleCartVisibility = function () {
         $scope.isCartOpen = !$scope.isCartOpen;

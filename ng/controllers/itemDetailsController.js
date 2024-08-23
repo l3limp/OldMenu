@@ -16,56 +16,34 @@ define(["app"], function (oldMenu) {
     ) {
       $scope.itemId = $routeParams.itemId;
 
+      $scope.$on('cartUpdated', function() {
+        $scope.cart = cartService.getCart();
+      });
+
       $scope.loadData = async function () {
         try {
-          const response = await $http.get(
-            "http://localhost:3000/items/" + $scope.itemId
-          );
-          const item = response.data;
+          const item = await fetchItemDetails($http, {
+            itemId: $scope.itemId,
+          });
           $scope.$apply(function () {
             $scope.item = item;
           });
           itemDetailsService.item = item;
-          console.log($scope.item);
+          console.log(item)
         } catch (error) {
-          console.error("Error:", error);
         }
       };
 
       $scope.loadData();
-      $scope.cart = cartService.cart;
-      $scope.$watch(
-        "cart",
-        function (newValue) {
-          cacheService.setData("cart", newValue);
-        },
-        true
-      );
+      $scope.cart = cartService.getCart();
 
       $scope.getDiscountPercentage = function (price, discountedPrice) {
         return Math.round((100 * (price - discountedPrice)) / price);
       };
 
-      $scope.getCartQuantity = function (itemId) {
-        if ($scope.cart[itemId] != null) {
-          return $scope.cart[itemId].quantity;
-        }
-        return 0;
-      };
-
-      $scope.addItemToCart = function (item) {
-        $scope.cart[item.id] = item;
-        $scope.cart[item.id].quantity = 1;
-        cartService.cart = $scope.cart;
-      };
-
-      $scope.changeItemQuantityInCart = function (action, itemId) {
-        $scope.cart[itemId].quantity += action;
-        if ($scope.cart[itemId].quantity === 0) {
-          delete $scope.cart[itemId];
-        }
-        cartService.cart = $scope.cart;
-      };
+      $scope.getCartQuantity = cartService.getCartQuantity;
+      $scope.addItemToCart = cartService.addItemToCart;
+      $scope.changeItemQuantityInCart = cartService.changeItemQuantityInCart;
     },
   ]);
 });

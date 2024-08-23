@@ -99,6 +99,7 @@ define(["app"], function (oldMenu) {
         searchQuery: "=",
         applyFilter: "&",
         applyVegFilter:'&',
+        searchResults:'='
       },
     };
   });

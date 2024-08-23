@@ -22,7 +22,8 @@
           ng-click="changeItemQuantityInCart( {action:-1, itemId:item.id})"
           >-</a
         >
-        {{getCartQuantity({itemId: item.id})}}
+        <!-- {{getCartQuantity({itemId: item.id})}} -->
+         {{item.quantity}}
         <a
           class="btn btn-primary horizontal-margin"
           ng-click="changeItemQuantityInCart({action: 1, itemId: item.id})"

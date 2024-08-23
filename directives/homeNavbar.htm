@@ -2,8 +2,7 @@
   <div class="container" style="color: white; height: 32px">
     <ul class="nav navbar-nav navbar-right">
       <li class="vertical-margin">
-
-        <div class="input-wrapper">
+        <div class="input-wrapper" style="font-size: 16px">
           <input
             type="text"
             class="form-control"
@@ -12,19 +11,26 @@
           />
           <div class="my-row">
             <i
-            ng-if="searchQuery != ''"
-  
-              class=" btn fa fa-search search-icon small-font"
+              ng-if="searchQuery != ''"
+              class="btn fa fa-search search-icon small-font"
               ng-click="loadSearchedItems({searchQuery: searchQuery})"
             ></i>
             <i
-
-  
-              class=" btn fa fa-close clear-icon small-font"
+              class="btn fa fa-close clear-icon small-font"
               ng-click="loadSearchedItems({searchQuery: ''})"
             ></i>
           </div>
-         
+        </div>
+        <div class="search-dropdown" >
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              ng-repeat="searchResult in searchResults"
+            ><a href="#/items/{{searchResult.id}}" style="background-color: white;color: rgb(67, 67, 67);">
+              {{searchResult.name}}
+            </a>
+            </li>
+          </ul>
         </div>
       </li>
       <li>

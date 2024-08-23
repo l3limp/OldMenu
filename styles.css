@@ -46,7 +46,7 @@
 }
 
 .input-wrapper .form-control {
-  padding-right: 30px; /* Adjust as needed */
+  padding-right: 30px; 
 }
 
 .input-wrapper .search-icon {
@@ -98,7 +98,7 @@
   position: fixed;
   top: 0px;
   width: 100%;
-  z-index: 998;
+  z-index: 999;
   background-color: rgb(233, 233, 233);
 }
 
@@ -186,4 +186,12 @@
   color: white;
   border-radius: 16px;
   align-content: center;
+}
+
+.search-dropdown {
+  height: fit-content;
+  color: rgb(68, 68, 68);
+  width: 222px;
+ position: absolute;
+ font-size: 12px;
 }
