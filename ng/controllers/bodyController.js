@@ -1,14 +1,15 @@
-define(["app"], function (oldMenu) {
+define(["app",], function (oldMenu) {
   oldMenu.controller("bodyController", [
     "$scope",
     "$http",
     "cartService",
     "cacheService",
     "$q",
-    function ($scope, $http, cartService, cacheService, $q) {
+    "requestsService",
+    function ($scope, $http, cartService, cacheService, $q, requestsService) {
       $scope.isCartOpen = false;
       $scope.cart = {};
-      
+
       $scope.$on('cartUpdated', function() {
         $scope.cart = cartService.getCart();
         if (!$scope.$$phase) {

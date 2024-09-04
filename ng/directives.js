@@ -20,12 +20,13 @@ define(["app"], function (oldMenu) {
       templateUrl: "directives/filtersModal.htm",
       replace: true,
       scope: {
-        types: "=",
-        cuisines: "=",
+        sizes: "=",
+        categories: "=",
         showFilterModal: "=",
-        toggleFilter: "&",
+        toggleFilterNew: "&",
         isFilterSelected: "&",
         toggleFilterModalVisibility: "&",
+        selectedSizes:'=',
       },
     };
   });
@@ -36,7 +37,6 @@ define(["app"], function (oldMenu) {
       replace: true,
       scope: {
         item: "=",
-        isDishToBeShown: "&",
         getDiscountPercentage: "&",
         getCartQuantity: "&",
         addItemToCart: "&",
@@ -57,14 +57,26 @@ define(["app"], function (oldMenu) {
     };
   });
 
+  oldMenu.directive("brandsColumn", function () {
+    return {
+      templateUrl: "directives/brandsColumn.htm",
+      replace: true,
+      scope: {
+        brands: "=",
+        toggleFilterNew: "&",
+        selectedBrands: "=",
+      },
+    };
+  });
+
   oldMenu.directive("categoriesColumn", function () {
     return {
       templateUrl: "directives/categoriesColumn.htm",
       replace: true,
       scope: {
-        currentCategory: "=",
         categories: "=",
-        changeCategory: "&",
+        toggleFilterNew: "&",
+        selectedCategories: "=",
       },
     };
   });
@@ -75,9 +87,10 @@ define(["app"], function (oldMenu) {
       replace: true,
       scope: {
         list: "=",
+        selectedList:'=',
         title: "@",
         filterSectionType: "@",
-        toggleFilter: "&",
+        toggleFilterNew: "&",
         isFilterSelected: "&",
       },
     };
@@ -88,18 +101,19 @@ define(["app"], function (oldMenu) {
       templateUrl: "directives/homeNavbar.htm",
       replace: true,
       scope: {
-        types: "=",
-        cuisines: "=",
+        sizes: "=",
+        categories: "=",
         showFilterModal: "=",
-        toggleFilter: "&",
+        toggleFilterNew: "&",
         isFilterSelected: "&",
         toggleFilterModalVisibility: "&",
         sortItemsPriceAscending: "&",
         loadSearchedItems: "&",
         searchQuery: "=",
         applyFilter: "&",
-        applyVegFilter:'&',
-        searchResults:'='
+        searchResults:'=',
+        selectedSizes:'=',
+        sizes:'='
       },
     };
   });

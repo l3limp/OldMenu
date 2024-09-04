@@ -21,26 +21,6 @@
             ></i>
           </div>
         </div>
-        <div class="search-dropdown" >
-          <ul class="list-group">
-            <li
-              class="list-group-item"
-              ng-repeat="searchResult in searchResults"
-            ><a href="#/items/{{searchResult.id}}" style="background-color: white;color: rgb(67, 67, 67);">
-              {{searchResult.name}}
-            </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-      <li>
-        <i
-          class="fa fa-leaf btn vertical-margin"
-          style="color: slategrey"
-          ng-click="applyVegFilter()"
-          uib-tooltip="Toggle Veg dishes"
-          tooltip-placement="bottom"
-        ></i>
       </li>
 
       <li>
@@ -63,12 +43,12 @@
         >
         <filters-modal
           show-filter-modal="showFilterModal"
-          types="types"
-          cuisines="cuisines"
-          toggle-filter="toggleFilter({filterType: filterType, property: property})"
+          toggle-filter-new="toggleFilterNew({filterType: filterType, property: property})"
           toggle-filter-modal-visibility="toggleFilterModalVisibility()"
           is-filter-selected="isFilterSelected({filterType: filterType, property: property})"
           apply-filter="applyFilter()"
+          sizes="sizes"
+          selected-sizes="selectedSizes"
         ></filters-modal>
       </li>
     </ul>

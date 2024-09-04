@@ -13,8 +13,9 @@ require.config({
     buyNowModalInstanceController: "controllers/buyNowModalInstanceController",
     homeController: "controllers/homeController",
     itemDetailsController: "controllers/itemDetailsController",
-    requests: "../service_functions/requests",
+    requests: "./requests",
     indexdb: "../service_functions/indexdb",
+
   },
   shim: {
     angular: { exports: "angular" },
@@ -24,7 +25,7 @@ require.config({
     routes: { deps: ["app"] },
     services: { deps: ["app"] },
     directives: { deps: ["app"] },
-    bodyController: { deps: ["app", "requests", "indexdb", ] },
+    bodyController: { deps: ["app", "requests", "indexdb"] },
     buyNowModalController: { deps: ["app", "requests", "indexdb"] },
     buyNowModalInstanceController: { deps: ["app", "requests", "indexdb"] },
     homeController: { deps: ["app", "requests", "indexdb"] },
@@ -42,7 +43,22 @@ require([
   "buyNowModalController",
   "buyNowModalInstanceController",
   "homeController",
-  "itemDetailsController"
+  "itemDetailsController",
 ], function (app) {
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyACcJQEPRSRAEw3hqyI_LSBxQl83CEJ-9c",
+    authDomain: "mixnmatch-ae531.firebaseapp.com",
+    projectId: "mixnmatch-ae531",
+    storageBucket: "mixnmatch-ae531.appspot.com",
+    messagingSenderId: "159319852029",
+    appId: "1:159319852029:web:994631429da0df04a5cf94",
+    measurementId: "G-K50561VHD1"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+
   angular.bootstrap(document, ["oldMenu"]);
 });
+
+

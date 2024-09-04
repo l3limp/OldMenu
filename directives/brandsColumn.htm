@@ -1,0 +1,14 @@
+<div class="small-screen-hide col-md-2 sticky-brands">
+  <p style="margin-bottom: 12px">Brands</p>
+
+  <div class="list-group">
+    <a
+      ng-click="toggleFilterNew({toggleType: 'brand', property: brand.name})"
+      class="list-group-item list-group-item-action"
+      ng-repeat="brand in brands"
+      ng-class="{ active: selectedBrands.includes(brand.name) }"
+    >
+      {{brand.name}}
+    </a>
+  </div>
+</div>

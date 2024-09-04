@@ -1,49 +1,92 @@
 <div class="container">
-  <div
-  style="height: 120px;"></div>
+  <div style="height: 120px"></div>
   <div class="row" ng-if="item">
-    <div class="col-md-6">
-      <img src={{item.image}} width="100%" />
+    <div class="col-md-6" style="margin-bottom: 32px">
+      <img
+        src="{{imageInFocus}}"
+        style="object-fit: cover; margin: 0 auto; width: 100%; height: 60vh"
+      />
+      <div class="my-row vertical-margin">
+        <img
+          class="btn"
+          style="
+            margin-right: 8px;
+            padding: 0px;
+            object-fit: cover;
+            width: 8vw;
+            min-width: 20%;
+            height: 10vh;
+          "
+          src="{{image}}"
+          ng-repeat="image in item.images"
+          ng-click="changeImageInFocus(image)"
+        />
+      </div>
     </div>
     <div class="col-md-5">
-      <div>{{item.name}}</div>
-      <div class="small-font">
-        <img src="images/{{item.type}}.png" style="height: 20px" />
-        {{item.cuisine.name}}
-      </div>
-      <div>
-        <s class="small-font horizontal-margin">₹{{item.price}}</s
-        >₹{{item.discountedPrice}}
-        <span
-          class="badge rounded-pill text-bg-secondary horizontal-margin"
-          >{{getDiscountPercentage(item.price, item.discountedPrice)}}%
-          OFF</span
-        >
-      </div>
-      <div class="vertical-margin">
-        <div ng-class="{hidden: getCartQuantity(item.id) !== 0}">
-          <a class="btn btn-primary" ng-click="addItemToCart(item)">ADD</a>
+      <div class="my-row spaced-content">
+        <div>
+          <div>{{item.name}}</div>
+          <div class="small-font">{{item.brand}}</div>
+    
+          <div>
+            <s class="small-font horizontal-margin">₹{{item.price}}</s
+            >₹{{item.discountedPrice}}
+            <span class="badge rounded-pill text-bg-secondary horizontal-margin"
+              >{{getDiscountPercentage(item.price, item.discountedPrice)}}%
+              OFF</span
+            >
+          </div>
+        </div>
+        <div>
+          <div class="vertical-margin">
 
-        </div>
-        <div class="my-row" ng-class="{hidden: getCartQuantity(item.id) === 0}">
-          <a class="btn btn-primary" ng-click="changeItemQuantityInCart(-1, item.id)">-</a>
-           <div class="horizontal-margin">{{getCartQuantity(item.id)}}</div>
-          <a class="btn btn-primary" ng-click="changeItemQuantityInCart(1, item.id)">+</a>
-          
+            <div>
+              <a class="btn btn-primary" ng-click="addItemToCart(item)">ADD</a>
+            </div>
+            <div class="my-row" ng-class="{hidden: getCartQuantity(item.id) === 0}">
+              <a
+                class="btn btn-primary"
+                ng-click="changeItemQuantityInCart(-1, item.id)"
+                >-</a
+              >
+              <div class="horizontal-margin">{{getCartQuantity(item.id)}}</div>
+              <a
+                class="btn btn-primary"
+                ng-click="changeItemQuantityInCart(1, item.id)"
+                >+</a
+              >
+            </div>
+          </div>
         </div>
       </div>
-      <div class="vertical-margin">
-        DETAILS ABOUT THIS MEAL
-        <div class="small-font">
-          {{item.itemDetails.description}}
-        </div>
-      </div>
+      
+      
 
       <div class="vertical-margin">
-        INGREDIENTS
-        <div class="small-font">
-          {{item.itemDetails.ingredients}}
+        Sizes available
+        <div class="my-row vertical-margin">
+          <div
+            class="btn"
+            style="
+              padding: auto;
+              height: 24px;
+              margin-right: 8px;
+              font-size: 1rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            ng-repeat="(size, stock) in item.stock"
+            ng-style="{'background-color': stock > 0 ? 'wheat' : 'rgb(181, 181, 181)'}"
+          >
+            {{size}}
+          </div>
         </div>
+      </div>
+      <div class="vertical-margin">
+        ITEM DETAILS
+        <div class="small-font">{{item.description}}</div>
       </div>
     </div>
   </div>

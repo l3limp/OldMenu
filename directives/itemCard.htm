@@ -1,19 +1,17 @@
 <div>
   <div
-    class="card col-md-1"
-    style="width: 18rem; margin: 6px; padding: 0px"
+    class="card"
+    style=" margin: 0px; padding: 0px; "
   >
-  <!-- ng-if="isDishToBeShown({type: item.type, cuisine:item.cuisine})==true" -->
-
     <div class="small-font vertical-margin">
-      <img src="images/{{item.type}}.png" style="height: 20px" />
-      {{item.cuisine.name}}
+      
+      {{item.brand}}
     </div>
     <a href="#/items/{{item.id}}">
       <img
-        src="{{item.image}}"
+        src="{{item.images[1]}}"
         class="card-img-top"
-        style="width: 100%; border-radius: 10px"
+        style="width: 100%; border-radius: 10px;"
         alt="{{item.name}}"
     /></a>
     <div class="card-body">

@@ -2,7 +2,7 @@ define(["app"], function (oldMenu) {
   oldMenu.service("itemService",  [
     function () {
       this.items = [];
-      this.categoryWiseItems = {};
+      this.brandWiseItems = {};
     },
   ]);
 
@@ -105,53 +105,98 @@ define(["app"], function (oldMenu) {
   oldMenu.service("filtersService", [
     function () {
       this.typeFilter = {};
-      this.cuisineFilter = {};
+      this.categoryFilter = {};
 
-      this.isFilterSelected = function (filterType, property) {
-        switch (filterType) {
-          case "type":
-            if (this.typeFilter[property] === true) {
-              return true;
+      this.brands = [];
+      this.categories = [];
+      this.sizes = [];
+
+      this.toggleFilterNew = function(toggleType, property) {
+        var index = -1;
+        switch (toggleType) {
+          case "brand":
+             index = this.brands.indexOf(property);
+            if (index > -1) {
+              this.brands.splice(index, 1);
+            } else {
+              this.brands.push(property);
             }
             break;
-          case "cuisine":
-            if (this.cuisineFilter[property] === true) {
-              return true;
+
+            case "category":
+             index = this.categories.indexOf(property);
+            if (index > -1) {
+              this.categories.splice(index, 1);
+            } else {
+              this.categories.push(property);
+            }
+            break;
+
+            case "size":
+             index = this.sizes.indexOf(property);
+            if (index > -1) {
+              this.sizes.splice(index, 1);
+            } else {
+              this.sizes.push(property);
             }
             break;
           default:
             break;
         }
-        return false;
-      };
+        console.log("in service",this.sizes);
 
-      this.toggleFilter = function (filterType, property) {
-        switch (filterType) {
-          case "type":
-            if (this.typeFilter[property] === true) {
-              delete this.typeFilter[property];
-            } else {
-              this.typeFilter[property] = true;
-            }
-            break;
-          case "cuisine":
-            if (this.cuisineFilter[property] === true) {
-              delete this.cuisineFilter[property];
-            } else {
-              this.cuisineFilter[property] = true;
-            }
-            break;
-          default:
-            break;
-        }
-      };
+      }
+
+      // this.isFilterSelected = function (filterType, property) {
+      //   switch (filterType) {
+      //     case "type":
+      //       if (this.typeFilter[property] === true) {
+      //         return true;
+      //       }
+      //       break;
+      //     case "category":
+      //       if (this.categoryFilter[property] === true) {
+      //         return true;
+      //       }
+      //       break;
+      //       case "size":
+      //       if (this.sizes.contains(property)) {
+      //         return true;
+      //       }
+      //       break;
+      //     default:
+      //       break;
+      //   }
+      //   return false;
+      // };
+
+      // this.toggleFilter = function (filterType, property) {
+      //   switch (filterType) {
+      //     case "type":
+      //       if (this.typeFilter[property] === true) {
+      //         delete this.typeFilter[property];
+      //       } else {
+      //         this.typeFilter[property] = true;
+      //       }
+      //       break;
+      //     case "category":
+      //       if (this.categoryFilter[property] === true) {
+      //         delete this.categoryFilter[property];
+      //       } else {
+      //         this.categoryFilter[property] = true;
+      //       }
+      //       break;
+      //     default:
+      //       break;
+      //   }
+      // };
     },
   ]);
 
-  // had to make this service as the url kept changing on selecting a category, which reinitialised the controller and thus, currentCategory to 'bowl'
-  oldMenu.service("categoryService", [
+  // had to make this service as the url kept changing on selecting a brand, which reinitialised the controller and thus, currentbrand to 'bowl'
+  oldMenu.service("brandService", [
     function () {
-      this.currentCategory = "Bowls";
+      this.currentbrand = "Bowls";
     },
   ]);
 

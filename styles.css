@@ -90,6 +90,7 @@
   flex-wrap: wrap;
 }
 
+
 .spaced-content {
   justify-content: space-between;
 }
@@ -110,17 +111,29 @@
   width: 100%;
 }
 
-.sticky-categories {
-  overflow: scroll;
-  height: 72%;
-  width: 164px;
+.sticky-brands {
+  height: 24%;
+  width: 16%;
   position: fixed;
   top: 156px;
 }
 
+.sticky-categories {
+  height: 24%;
+  width: 16%;
+  position: fixed;
+  top: 420px;
+}
+
+.list-group{
+  overflow: scroll;
+  height: 100%;
+
+}
+
 /* for testing */
 .local-color {
-  background-color: yellowgreen;
+  background-color: greenyellow;
 }
 
 @font-face {
@@ -188,10 +201,10 @@
   align-content: center;
 }
 
-.search-dropdown {
-  height: fit-content;
-  color: rgb(68, 68, 68);
-  width: 222px;
- position: absolute;
- font-size: 12px;
+
+.list-group-item {
+  padding-top: 4px;
+  padding-bottom: 8px;
+  height: 24px;
+  font-size: 12px;
 }

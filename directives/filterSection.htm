@@ -6,10 +6,10 @@
       ng-repeat="element in list"
       type="button"
       class="btn"
-      ng-class="{ 'btn-primary': isFilterSelected({filterType: filterSectionType, property:element}) }"
+      ng-class="{ 'btn-primary': selectedList.includes(element) }"
       data-bs-toggle="button"
       style="margin-right: 8px; margin-bottom: 8px"
-      ng-click="toggleFilter({filterType: filterSectionType, property: element})"
+      ng-click="toggleFilterNew({filterType: filterSectionType, property: element})"
     >
       {{element}}
     </button>

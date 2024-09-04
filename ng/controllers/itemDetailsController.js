@@ -6,36 +6,37 @@ define(["app"], function (oldMenu) {
     "itemDetailsService",
     "cartService",
     "cacheService",
+    "requestsService",
     function (
       $scope,
       $routeParams,
       $http,
       itemDetailsService,
       cartService,
-      cacheService
+      cacheService,
+      requestsService
     ) {
       $scope.itemId = $routeParams.itemId;
+      $scope.imageInFocus = "";
 
       $scope.$on('cartUpdated', function() {
         $scope.cart = cartService.getCart();
       });
 
-      $scope.loadData = async function () {
-        try {
-          const item = await fetchItemDetails($http, {
-            itemId: $scope.itemId,
-          });
-          $scope.$apply(function () {
-            $scope.item = item;
-          });
-          itemDetailsService.item = item;
-          console.log(item)
-        } catch (error) {
-        }
-      };
+      requestsService.getItemById($scope.itemId).then((item) => {
+        $scope.$apply(function () {
+          $scope.item = item;
+          $scope.imageInFocus = item.images[0];
 
-      $scope.loadData();
+        });
+        itemDetailsService.item = item;
+      });
+
       $scope.cart = cartService.getCart();
+
+      $scope.changeImageInFocus = function(image) {
+        $scope.imageInFocus = image;
+      }
 
       $scope.getDiscountPercentage = function (price, discountedPrice) {
         return Math.round((100 * (price - discountedPrice)) / price);

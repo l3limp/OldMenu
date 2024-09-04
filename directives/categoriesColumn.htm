@@ -3,10 +3,10 @@
 
   <div class="list-group">
     <a
-      ng-click="changeCategory({newCategory:category})"
+      ng-click="toggleFilterNew({toggleType: 'category', property: category})"
       class="list-group-item list-group-item-action"
       ng-repeat="category in categories"
-      ng-class="{ active: category === currentCategory }"
+      ng-class="{ active: selectedCategories.includes(category) }"
     >
       {{category}}
     </a>

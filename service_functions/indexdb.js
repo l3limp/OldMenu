@@ -7,11 +7,11 @@ var openDatabase = function() {
       if (!db.objectStoreNames.contains("items")) {
         db.createObjectStore("items", { keyPath: "id" });
       }
+      if (!db.objectStoreNames.contains("brands")) {
+        db.createObjectStore("brands", { keyPath: "data" });
+      }
       if (!db.objectStoreNames.contains("categories")) {
         db.createObjectStore("categories", { keyPath: "data" });
-      }
-      if (!db.objectStoreNames.contains("cuisines")) {
-        db.createObjectStore("cuisines", { keyPath: "data" });
       }
     };
 

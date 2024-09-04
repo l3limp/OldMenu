@@ -1,51 +1,49 @@
 <home-navbar
   show-filter-modal="showFilterModal"
+  sizes="sizes"
+  selected-sizes="selectedSizes"
   types="types"
-  cuisines="cuisines"
-  toggle-filter="toggleFilter(filterType, property)"
+  categories="categories"
+  toggle-filter-new="toggleFilterNew(filterType, property)"
   toggle-filter-modal-visibility="toggleFilterModalVisibility()"
   is-filter-selected="isFilterSelected(filterType, property)"
   sort-items-price-ascending="sortItemsPriceAscending()"
   load-searched-items="loadSearchedItems(searchQuery)"
   search-query="searchQuery"
   apply-filter="applyFilter()"
-  apply-veg-filter="applyVegFilter()"
   search-results = "searchResults"
   focus-search = "focusSearch"
 ></home-navbar>
 
+
+<brands-column
+  class="small-screen-hide"
+  brands="brands"
+  toggle-filter-new="toggleFilterNew(toggleType, property)"
+  selected-brands="selectedBrands"
+></brands-column>
+
 <categories-column
   class="small-screen-hide"
-  current-category="currentCategory"
   categories="categories"
-  change-category="changeCategory(newCategory)"
+  toggle-filter-new="toggleFilterNew(toggleType, property)"
+  selected-categories="selectedCategories"
 ></categories-column>
 
 <div class="big-screen-left-margin" style="margin-top: 148px">
   <div ng-if="loadingState">Loading</div>
-  <div ng-if="items.length == 0">No items in the category</div>
-  <div class="my-row">
-    <div ng-repeat="item in items" ng-if="!loadingState">
-      <item-card
-        item="item"
-        is-dish-to-be-shown="isDishToBeShown(type, cuisine)"
-        get-discount-percentage="getDiscountPercentage(price, discountedPrice)"
-        get-cart-quantity="getCartQuantity(itemId)"
-        add-item-to-cart="addItemToCart(item)"
-        change-item-quantity-in-cart="changeItemQuantityInCart(action, itemId)"
-      ></item-card>
-    </div>
-  </div>
+  <div ng-if="items.length == 0">No items in the brand</div>
+    <div class="my-row ">
+      <div class="col-xs-6 col-md-4" ng-repeat="item in items" ng-if="!loadingState">
+        <item-card
+          item="item"
+          get-discount-percentage="getDiscountPercentage(price, discountedPrice)"
+          get-cart-quantity="getCartQuantity(itemId)"
+          add-item-to-cart="addItemToCart(item)"
+          change-item-quantity-in-cart="changeItemQuantityInCart(action, itemId)"
+        ></item-card>
+      </div>
 
-  <nav aria-label="...">
-    <ul class="pagination">
-      <li class="page-item" >
-        <a class="page-link" tabindex="-1" ng-click="changePage(-1)">Previous</a>
-      </li>
-      <li class="page-item"><a class="page-link">{{currentPage}}</a></li>
-      <li class="page-item">
-        <a class="page-link" ng-click="changePage(1)" >Next</a>
-      </li>
-    </ul>
-  </nav>
+
+  </div>
 </div>
